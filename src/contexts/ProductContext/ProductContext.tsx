@@ -26,7 +26,7 @@ const initState: initStateProducts = {
   oneProduct: null,
   categories: [],
   pageTotalCount: 1,
-  page: 1
+  page: 1,
 };
 
 function reducer(state: initStateProducts, action: ProductContextActions) {
@@ -59,8 +59,8 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
       const { data, headers } = await $axios.get(
         `${API_BACKEND}/products/${window.location.search}`
       );
-      console.log(headers);
-      const count = Math.ceil(headers["x-total-count"] / LIMIT);
+      console.log(headers, "headers");
+      const count = Math.ceil(headers["content-length"] / LIMIT);
 
       dispatch({
         type: "pageTotalCount",

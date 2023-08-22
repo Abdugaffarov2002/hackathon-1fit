@@ -6,6 +6,7 @@ export interface AuthContextTypes {
   login: (credentials: UserTypeLogin) => void;
   logout: () => void;
   checkAuth: () => void;
+  isAdmin: () => boolean;
 }
 
 export interface UserTypeLogin {

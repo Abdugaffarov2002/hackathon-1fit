@@ -12,7 +12,7 @@ import {
   UserTypeRegister,
 } from "./types";
 import axios from "axios";
-import { API_BACKEND } from "../../utils/consts";
+import { ADMINS, API_BACKEND } from "../../utils/consts";
 import $axios from "../../utils/axios";
 
 const authContext = createContext<AuthContextTypes | null>(null);
@@ -70,12 +70,21 @@ const AuthContext: FC<AuthContextProps> = ({ children }) => {
     }
   }
 
+  function isAdmin() {
+    if (!user) {
+      return false;
+    }
+
+    return ADMINS.includes((user as { email: string }).email);
+  }
+
   const value = {
     user,
     signup,
     login,
     logout,
     checkAuth,
+    isAdmin,
   };
   return <authContext.Provider value={value}>{children} </authContext.Provider>;
 };

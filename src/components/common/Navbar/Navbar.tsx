@@ -59,7 +59,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
-  const { user, logout } = useAuthContext();
+  const { user, logout, isAdmin } = useAuthContext();
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -112,7 +112,6 @@ export default function Navbar() {
           sx={{ flexDirection: "column" }}
         >
           <MenuItem> {user.email}</MenuItem>
-          <Typography onClick={() => navigate("/add")}>Add </Typography>
           <MenuItem onClick={logout}>Logout</MenuItem>
         </Box>
       ) : (
@@ -180,12 +179,23 @@ export default function Navbar() {
         <Toolbar>
           <Container>
             <img
+              onClick={() => navigate("/")}
               className="logo-img"
               src="https://media.licdn.com/dms/image/C4D1BAQFeREzGedcR8Q/company-background_10000/0/1583585958506/1fit_cover?e=1693252800&v=beta&t=dyJ-g2oMCGHVDUzTKOikBbqtWvqwj4EvUu1CXyWB9mw"
               alt="logo"
             />
           </Container>
-          <Typography onClick={() => navigate("/catalog")}>Catalog</Typography>
+          <Container
+            sx={{ display: "flex", flexDirection: "row", gap: "25px" }}
+          >
+            {isAdmin() && (
+              <Typography onClick={() => navigate("/add")}>ADD </Typography>
+            )}
+
+            <Typography onClick={() => navigate("/catalog")}>
+              Catalog
+            </Typography>
+          </Container>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
