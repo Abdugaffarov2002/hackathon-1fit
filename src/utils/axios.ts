@@ -4,7 +4,7 @@ import { API_BACKEND } from "./consts";
 const $axios = axios.create();
 
 $axios.interceptors.request.use(async (config) => {
-  const tokens = JSON.parse(localStorage.getItem("tokens") as string);
+  const tokens = JSON.parse(localStorage.getItem("mytokens") as string);
   if (tokens) {
     config.headers.Authorization = `Bearer ${tokens.access}`;
   }
@@ -18,7 +18,7 @@ $axios.interceptors.response.use(
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      const tokens = JSON.parse(localStorage.getItem("tokens") as string);
+      const tokens = JSON.parse(localStorage.getItem("mytokens") as string);
       if (tokens) {
         const { data } = await axios.post(
           `${API_BACKEND}/account/token/refresh/`,
@@ -28,7 +28,7 @@ $axios.interceptors.response.use(
         );
 
         localStorage.setItem(
-          "tokens",
+          "mytokens",
           JSON.stringify({ access: data.access, refresh: tokens.refresh })
         );
 

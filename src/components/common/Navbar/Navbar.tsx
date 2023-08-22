@@ -13,8 +13,10 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Container } from "@mui/material";
+import { Button, Container, Link } from "@mui/material";
 import "./Navbar.css";
+import { useAuthContext } from "../../../contexts/AuthContext/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -57,6 +59,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+  const { user, logout } = useAuthContext();
+  const navigate = useNavigate();
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
@@ -98,8 +103,22 @@ export default function Navbar() {
       open={isMenuOpen}
       onClose={handleMenuClose}
     >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      {user ? (
+        <Box
+          display="flex"
+          alignItems="center"
+          px={2}
+          gap={1}
+          sx={{ flexDirection: "column" }}
+        >
+          <MenuItem> {user.email}</MenuItem>
+          <MenuItem onClick={logout}>Logout</MenuItem>
+        </Box>
+      ) : (
+        <Button component={Link} onClick={() => navigate("/auth")}>
+          Login
+        </Button>
+      )}
     </Menu>
   );
 
@@ -150,7 +169,6 @@ export default function Navbar() {
         >
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
       </MenuItem>
     </Menu>
   );

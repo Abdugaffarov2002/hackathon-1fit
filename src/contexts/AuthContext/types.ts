@@ -1,7 +1,11 @@
 import { UserType } from "../../models/users";
 
-export interface IAuthContextTypes {
+export interface AuthContextTypes {
   user: UserType | null;
+  signup: (credentials: UserTypeRegister) => void;
+  login: (credentials: UserTypeLogin) => void;
+  logout: () => void;
+  checkAuth: () => void;
 }
 
 export interface UserTypeLogin {
