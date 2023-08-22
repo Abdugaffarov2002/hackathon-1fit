@@ -13,7 +13,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Button, Container, Link } from "@mui/material";
+import { Button, Container, Link, Typography } from "@mui/material";
 import "./Navbar.css";
 import { useAuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
@@ -112,6 +112,7 @@ export default function Navbar() {
           sx={{ flexDirection: "column" }}
         >
           <MenuItem> {user.email}</MenuItem>
+          <Typography onClick={() => navigate("/add")}>Add </Typography>
           <MenuItem onClick={logout}>Logout</MenuItem>
         </Box>
       ) : (
@@ -184,7 +185,7 @@ export default function Navbar() {
               alt="logo"
             />
           </Container>
-
+          <Typography onClick={() => navigate("/catalog")}>Catalog</Typography>
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
