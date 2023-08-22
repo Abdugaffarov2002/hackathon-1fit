@@ -4,6 +4,7 @@ import React, {
   createContext,
   useContext,
   useReducer,
+  useState,
 } from "react";
 import {
   ProductContextActions,
@@ -11,7 +12,8 @@ import {
   initStateProducts,
 } from "./types";
 import $axios from "../../utils/axios";
-import { API_BACKEND } from "../../utils/consts";
+import { API_BACKEND, LIMIT } from "../../utils/consts";
+import { useSearchParams } from "react-router-dom";
 
 const productContext = createContext<ProductContextTypes | null>(null);
 
@@ -23,6 +25,8 @@ const initState: initStateProducts = {
   products: [],
   oneProduct: null,
   categories: [],
+  pageTotalCount: 1,
+  page: 1
 };
 
 function reducer(state: initStateProducts, action: ProductContextActions) {
@@ -33,6 +37,8 @@ function reducer(state: initStateProducts, action: ProductContextActions) {
       return { ...state, oneProduct: action.payload };
     case "categories":
       return { ...state, categories: action.payload };
+    case "pageTotalCount":
+      return { ...state, pageTotalCount: action.payload };
     default:
       return state;
   }
@@ -42,13 +48,24 @@ interface ProductContextProps {
   children: ReactNode;
 }
 const ProductContext: FC<ProductContextProps> = ({ children }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useReducer(reducer, initState);
+  const [page, setPage] = useState<number>(
+    +(searchParams.get("_page") as string) || 1
+  );
 
   async function getProducts() {
     try {
-      const { data } = await $axios.get(
+      const { data, headers } = await $axios.get(
         `${API_BACKEND}/products/${window.location.search}`
       );
+      console.log(headers);
+      const count = Math.ceil(headers["x-total-count"] / LIMIT);
+
+      dispatch({
+        type: "pageTotalCount",
+        payload: count,
+      });
 
       dispatch({
         type: "products",
@@ -117,12 +134,15 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
     products: state.products,
     oneProduct: state.oneProduct,
     categories: state.categories,
+    pageTotalCount: state.pageTotalCount,
+    page,
     getProducts,
     getCategories,
     addProduct,
     deleteProduct,
     getOneProduct,
     editProduct,
+    setPage,
   };
   return (
     <productContext.Provider value={value}>{children}</productContext.Provider>
