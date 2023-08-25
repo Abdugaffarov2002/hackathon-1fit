@@ -27,7 +27,7 @@
 @media only screen and (max-width: 375px) {
   .name_of_pages {
     gap: 5px;
-    padding: 5px;
+    padding: 4px;
   }
   .logo_container {
     padding-left: 0 !important;
