@@ -14,9 +14,9 @@ import { ProductType } from "../../../models/product";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import Rating from "@mui/material/Rating";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext/AuthContext";
@@ -82,10 +82,17 @@ export default function ProductItem({ item }: itemProps) {
             {item.description}
           </Typography>
         </CardContent>
+        <Container>
+          <Rating sx={{ mr: "10px" }} />
+        </Container>
         <CardActions>
-          <MenuItem onClick={handleClose}>
+          <Container>
+            <FavoriteBorderIcon sx={{ mr: "15px" }} />
+            <ChatBubbleOutlineIcon />
+          </Container>
+          <Container sx={{ justifyContent: "end", width: "auto" }}>
             <TurnedInNotOutlinedIcon />
-          </MenuItem>
+          </Container>
         </CardActions>
       </Card>
     </Grid>
