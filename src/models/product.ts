@@ -1,6 +1,6 @@
 export interface CategoryType {
   id: number;
-  title: string;
+  title: number;
 }
 export interface ProductType {
   id: number;

@@ -13,6 +13,10 @@ import { useProductContext } from "../../../contexts/ProductContext/ProductConte
 import { ProductType } from "../../../models/product";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext/AuthContext";
@@ -83,6 +87,12 @@ export default function ProductItem({ item }: itemProps) {
         <CardActions>
           <MenuItem onClick={handleClose}>
             <TurnedInNotOutlinedIcon />
+          </MenuItem>
+          <MenuItem>
+            <ShoppingCartIcon />
+          </MenuItem>
+          <MenuItem>
+            <FavoriteBorderIcon />
           </MenuItem>
         </CardActions>
       </Card>

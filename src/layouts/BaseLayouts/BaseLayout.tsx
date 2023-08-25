@@ -7,9 +7,7 @@ const BaseLayout = () => {
   return (
     <div>
       <Navbar />
-      <Container>
-        <Outlet />
-      </Container>
+      <Outlet />
     </div>
   );
 };
