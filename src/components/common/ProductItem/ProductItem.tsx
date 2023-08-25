@@ -4,7 +4,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { Grid } from "@mui/material";
+import { Container, Grid, Link } from "@mui/material";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
@@ -20,7 +20,6 @@ import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext/AuthContext";
-
 interface itemProps {
   item: ProductType;
 }
@@ -75,24 +74,17 @@ export default function ProductItem({ item }: itemProps) {
           )}
         </CardMedia>
 
-        <CardContent>
+        <CardContent onClick={() => navigate("/details/id")}>
           <Typography gutterBottom variant="h5" component="div">
             {item.title}
           </Typography>
           <Typography variant="body2" color="text.secondary">
             {item.description}
           </Typography>
-          <Typography variant="h6">${item.price}</Typography>
         </CardContent>
         <CardActions>
           <MenuItem onClick={handleClose}>
             <TurnedInNotOutlinedIcon />
-          </MenuItem>
-          <MenuItem>
-            <ShoppingCartIcon />
-          </MenuItem>
-          <MenuItem>
-            <FavoriteBorderIcon />
           </MenuItem>
         </CardActions>
       </Card>
