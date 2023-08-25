@@ -2,5 +2,41 @@
   width: 15vh;
   height: 6vh;
   border-radius: 8px;
-  margin-left: -39px;
+}
+.name_of_pages {
+  gap: 25px;
+}
+
+@media only screen and (min-width: 426px) {
+  .search_navbar_product {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .logo-img {
+    width: 10vh;
+  }
+  .name_of_pages {
+    gap: 8px;
+  }
+  .search_navbar {
+    display: none;
+  }
+}
+@media only screen and (max-width: 375px) {
+  .name_of_pages {
+    gap: 5px;
+    padding: 5px;
+  }
+  .logo_container {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  .search_navbar_product {
+    display: block;
+  }
 }
