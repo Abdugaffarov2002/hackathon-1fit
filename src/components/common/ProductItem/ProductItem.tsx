@@ -86,12 +86,6 @@ export default function ProductItem({ item }: itemProps) {
           <MenuItem onClick={handleClose}>
             <TurnedInNotOutlinedIcon />
           </MenuItem>
-          <MenuItem>
-            <ShoppingCartIcon />
-          </MenuItem>
-          <MenuItem>
-            <FavoriteBorderIcon />
-          </MenuItem>
         </CardActions>
       </Card>
     </Grid>
