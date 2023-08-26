@@ -25,7 +25,7 @@ interface itemProps {
 }
 
 export default function ProductItem({ item }: itemProps) {
-  const { deleteProduct } = useProductContext();
+  const { deleteProduct, likeProduct } = useProductContext();
   const { isAdmin } = useAuthContext();
   const navigate = useNavigate();
 
@@ -87,7 +87,11 @@ export default function ProductItem({ item }: itemProps) {
         </Container>
         <CardActions>
           <Container>
-            <FavoriteBorderIcon sx={{ mr: "15px" }} />
+            <FavoriteBorderIcon
+              onClick={() => likeProduct(item.id, item.likes)}
+              sx={{ mr: "15px" }}
+            />
+            <Typography>{item.likes}</Typography>
             <ChatBubbleOutlineIcon />
           </Container>
           <Container sx={{ justifyContent: "end", width: "auto" }}>

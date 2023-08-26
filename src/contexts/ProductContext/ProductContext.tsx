@@ -111,6 +111,7 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
   async function editProduct(id: number, newData: any) {
     try {
       await $axios.patch(`${API_BACKEND}/products/${id}/`, newData);
+
       getProducts();
     } catch (error) {
       console.log(error, "errorOfeditProduct");
@@ -130,6 +131,24 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
     }
   }
 
+  function likeProduct(id: number, likes: number) {
+    const updatedLikes = likes + 1; // Увеличение на 1, если пользователь нажимает на лайк
+
+    const updatedData = {
+      likes: updatedLikes,
+    };
+
+    $axios
+      .patch(`${API_BACKEND}/products/${id}/`, updatedData)
+      .then((response) => {
+        console.log("Продукт успешно лайкнут:", response.data);
+        // Обновите состояние в вашем Redux-сторе или контексте
+      })
+      .catch((error) => {
+        console.error("Ошибка при лайке продукта:", error);
+      });
+  }
+
   const value = {
     products: state.products,
     oneProduct: state.oneProduct,
@@ -143,6 +162,7 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
     getOneProduct,
     editProduct,
     setPage,
+    likeProduct,
   };
   return (
     <productContext.Provider value={value}>{children}</productContext.Provider>
