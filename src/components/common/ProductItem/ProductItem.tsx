@@ -96,7 +96,9 @@ export default function ProductItem({ item }: itemProps) {
           </Container>
           <Container sx={{ justifyContent: "end", width: "auto" }}>
             <TurnedInNotOutlinedIcon />
-          </Container>
+             </Container>
+          </MenuItem>
+
         </CardActions>
       </Card>
     </Grid>

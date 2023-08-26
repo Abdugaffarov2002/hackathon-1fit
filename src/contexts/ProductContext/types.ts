@@ -17,6 +17,8 @@ export interface ProductContextTypes extends initStateProducts {
   editProduct: (id: number, newData: any) => void;
   setPage: (num: number) => void;
   likeProduct: (id: number, likes: number) => void;
+  getFilteredProducts: ({ category }: { category: string }) => void;
+
 }
 
 export type IInitState = {
