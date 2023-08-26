@@ -26,7 +26,7 @@ const initState: initStateProducts = {
   oneProduct: null,
   categories: [],
   pageTotalCount: 1,
-  page: 1
+  page: 1,
 };
 
 function reducer(state: initStateProducts, action: ProductContextActions) {
@@ -53,6 +53,22 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
   const [page, setPage] = useState<number>(
     +(searchParams.get("_page") as string) || 1
   );
+
+  const getFilteredProducts = async ({ category }: { category: string }) => {
+    try {
+      const response = await $axios.get<products[]>(API);
+      const filteredProducts = response.data.filter(
+        (product: products) => product.category === category
+      );
+
+      dispatch({
+        type: "products",
+        payload: filteredProducts,
+      });
+    } catch (error) {
+      console.error("Error fetching filtered products:", error);
+    }
+  };
 
   async function getProducts() {
     try {
@@ -143,6 +159,7 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
     getOneProduct,
     editProduct,
     setPage,
+    getFilteredProducts,
   };
   return (
     <productContext.Provider value={value}>{children}</productContext.Provider>

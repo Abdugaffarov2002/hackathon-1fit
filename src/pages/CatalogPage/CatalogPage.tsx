@@ -4,6 +4,7 @@ import ProductItem from "../../components/common/ProductItem/ProductItem";
 import { useSearchParams } from "react-router-dom";
 import { useProductContext } from "../../contexts/ProductContext/ProductContext";
 import Pagination from "../../components/Pagination/Pagination";
+import Filter from "../../components/common/Filter/Filter";
 
 const CatalogPage = () => {
   const { getProducts, products } = useProductContext();
@@ -14,14 +15,18 @@ const CatalogPage = () => {
   }, [serchParams]);
   return (
     <div>
+      <Box sx={{ maxWidth: "max-content", margin: "30px auto" }}>
+        <Filter />
+      </Box>
       <Grid container spacing={2} justifyContent="center">
         {products.map((item) => (
           <ProductItem key={item.id} item={item} />
         ))}
       </Grid>
+
       <Box sx={{ maxWidth: "max-content", margin: "30px auto" }}>
-          <Pagination />
-        </Box>
+        <Pagination />
+      </Box>
     </div>
   );
 };
