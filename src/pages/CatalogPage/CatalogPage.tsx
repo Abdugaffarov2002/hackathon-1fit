@@ -4,6 +4,8 @@ import ProductItem from "../../components/common/ProductItem/ProductItem";
 import { useSearchParams } from "react-router-dom";
 import { useProductContext } from "../../contexts/ProductContext/ProductContext";
 import Pagination from "../../components/Pagination/Pagination";
+import Filter from "../../components/common/Filter/Filter";
+
 import SearchIcon from "@mui/icons-material/Search";
 
 const Search = styled("div")(({ theme }) => ({
@@ -56,6 +58,9 @@ const CatalogPage = () => {
 
   return (
     <div>
+      <Box sx={{ maxWidth: "max-content", margin: "30px auto" }}>
+        <Filter />
+      </Box>
       <Search className="search_navbar_product">
         <SearchIconWrapper>
           <SearchIcon />
@@ -70,6 +75,7 @@ const CatalogPage = () => {
           <ProductItem key={item.id} item={item} />
         ))}
       </Grid>
+
       <Box sx={{ maxWidth: "max-content", margin: "30px auto" }}>
         <Pagination />
       </Box>
