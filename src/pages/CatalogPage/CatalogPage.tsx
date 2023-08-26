@@ -5,7 +5,6 @@ import { useSearchParams } from "react-router-dom";
 import { useProductContext } from "../../contexts/ProductContext/ProductContext";
 import Pagination from "../../components/Pagination/Pagination";
 import Filter from "../../components/common/Filter/Filter";
-
 import SearchIcon from "@mui/icons-material/Search";
 
 const Search = styled("div")(({ theme }) => ({
@@ -61,6 +60,7 @@ const CatalogPage = () => {
       <Box sx={{ maxWidth: "max-content", margin: "30px auto" }}>
         <Filter />
       </Box>
+
       <Search className="search_navbar_product">
         <SearchIconWrapper>
           <SearchIcon />

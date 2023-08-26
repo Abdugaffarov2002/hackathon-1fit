@@ -14,9 +14,9 @@ import { ProductType } from "../../../models/product";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import RemoveShoppingCartIcon from "@mui/icons-material/RemoveShoppingCart";
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
+import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+import Rating from "@mui/material/Rating";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext/AuthContext";
@@ -25,7 +25,7 @@ interface itemProps {
 }
 
 export default function ProductItem({ item }: itemProps) {
-  const { deleteProduct } = useProductContext();
+  const { deleteProduct, likeProduct } = useProductContext();
   const { isAdmin } = useAuthContext();
   const navigate = useNavigate();
 
@@ -82,10 +82,23 @@ export default function ProductItem({ item }: itemProps) {
             {item.description}
           </Typography>
         </CardContent>
+        <Container>
+          <Rating sx={{ mr: "10px" }} />
+        </Container>
         <CardActions>
-          <MenuItem onClick={handleClose}>
+          <Container>
+            <FavoriteBorderIcon
+              onClick={() => likeProduct(item.id, item.likes)}
+              sx={{ mr: "15px" }}
+            />
+            <Typography>{item.likes}</Typography>
+            <ChatBubbleOutlineIcon />
+          </Container>
+          <Container sx={{ justifyContent: "end", width: "auto" }}>
             <TurnedInNotOutlinedIcon />
+             </Container>
           </MenuItem>
+
         </CardActions>
       </Card>
     </Grid>

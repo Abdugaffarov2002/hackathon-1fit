@@ -8,5 +8,6 @@ export interface ProductType {
   description: string;
   price: string;
   image: string;
+  likes: any;
   category: CategoryType;
 }

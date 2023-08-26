@@ -212,7 +212,7 @@ export default function Navbar() {
             <Typography onClick={() => navigate("/catalog")}>
               Залы и студии
             </Typography>
-            <Typography>Цены</Typography>
+
             {isAdmin() && (
               <Typography onClick={() => navigate("/add")}>ADD </Typography>
             )}
