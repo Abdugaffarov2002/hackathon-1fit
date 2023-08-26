@@ -10,8 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
 import AccountCircle from "@mui/icons-material/AccountCircle";
-import MailIcon from "@mui/icons-material/Mail";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Button, Container, Link, Typography } from "@mui/material";
 import "./Navbar.css";
@@ -48,7 +47,6 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
@@ -59,12 +57,24 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
-  const { user, logout } = useAuthContext();
+  const { user, logout, isAdmin } = useAuthContext();
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
     React.useState<null | HTMLElement>(null);
+
+  // ------------------------------------------------------//
+  const [anchorEl1, setAnchorEl1] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl1);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl1(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl1(null);
+  };
+
+  // ------------------------------------------------------//
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -112,7 +122,6 @@ export default function Navbar() {
           sx={{ flexDirection: "column" }}
         >
           <MenuItem> {user.email}</MenuItem>
-          <Typography onClick={() => navigate("/add")}>Add </Typography>
           <MenuItem onClick={logout}>Logout</MenuItem>
         </Box>
       ) : (
@@ -140,26 +149,36 @@ export default function Navbar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="error">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton
-          size="large"
-          aria-label="show 17 new notifications"
-          color="inherit"
-        >
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
+      <Button
+        sx={{ color: "dark" }}
+        id="demo-positioned-button"
+        aria-controls={open ? "demo-positioned-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      >
+        Город
+        <KeyboardArrowDownIcon />
+      </Button>
+      <Menu
+        id="demo-positioned-menu"
+        aria-labelledby="demo-positioned-button"
+        anchorEl={anchorEl1}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "right",
+        }}
+      >
+        <MenuItem onClick={handleClose}>Бишкек</MenuItem>
+        <MenuItem onClick={handleClose}>Ош</MenuItem>
+      </Menu>
+
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           size="large"
@@ -178,15 +197,27 @@ export default function Navbar() {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "#3447F6" }}>
         <Toolbar>
-          <Container>
+          <Container className="logo_container" sx={{ width: "auto" }}>
             <img
+              onClick={() => navigate("/")}
               className="logo-img"
               src="https://media.licdn.com/dms/image/C4D1BAQFeREzGedcR8Q/company-background_10000/0/1583585958506/1fit_cover?e=1693252800&v=beta&t=dyJ-g2oMCGHVDUzTKOikBbqtWvqwj4EvUu1CXyWB9mw"
               alt="logo"
             />
           </Container>
-          <Typography onClick={() => navigate("/catalog")}>Catalog</Typography>
-          <Search>
+          <Container
+            className="name_of_pages"
+            sx={{ display: "flex", flexDirection: "row" }}
+          >
+            <Typography onClick={() => navigate("/catalog")}>
+              Залы и студии
+            </Typography>
+            <Typography>Цены</Typography>
+            {isAdmin() && (
+              <Typography onClick={() => navigate("/add")}>ADD </Typography>
+            )}
+          </Container>
+          <Search className="search_navbar">
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
@@ -197,24 +228,36 @@ export default function Navbar() {
           </Search>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton
-              size="large"
-              aria-label="show 4 new mails"
-              color="inherit"
+            <Button
+              sx={{ color: "white" }}
+              id="demo-positioned-button"
+              aria-controls={open ? "demo-positioned-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
             >
-              <Badge badgeContent={4} color="error">
-                <MailIcon />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              aria-label="show 17 new notifications"
-              color="inherit"
+              Город
+              <KeyboardArrowDownIcon />
+            </Button>
+            <Menu
+              id="demo-positioned-menu"
+              aria-labelledby="demo-positioned-button"
+              anchorEl={anchorEl1}
+              open={open}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
             >
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
+              <MenuItem onClick={handleClose}>Бишкек</MenuItem>
+              <MenuItem onClick={handleClose}>Ош</MenuItem>
+            </Menu>
+
             <IconButton
               size="large"
               edge="end"
@@ -236,7 +279,7 @@ export default function Navbar() {
               onClick={handleMobileMenuOpen}
               color="inherit"
             >
-              <MoreIcon />
+              <MoreIcon sx={{ ml: "-10px" }} />
             </IconButton>
           </Box>
         </Toolbar>

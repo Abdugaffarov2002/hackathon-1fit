@@ -1,0 +1,37 @@
+.container4 {
+  width: 100%;
+  height: 50vh;
+}
+
+.title4 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title4 h2 {
+  font-size: 32px;
+}
+
+.examply-4 img {
+  display: flex;
+  width: 380px;
+  height: 220px;
+  border-radius: 40px;
+  padding: 0;
+  overflow: hidden;
+  background-size: cover;
+  background-position: 50% 50%;
+}
+
+.images-4 {
+  margin-top: 15px;
+  display: flex;
+  padding: 0;
+  justify-content: space-between;
+}
+
+.examply-4 h4 {
+  font-size: 32px;
+  font-weight: 600;
+}

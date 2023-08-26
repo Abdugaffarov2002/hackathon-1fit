@@ -75,8 +75,8 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
       const { data, headers } = await $axios.get(
         `${API_BACKEND}/products/${window.location.search}`
       );
-      console.log(headers);
-      const count = Math.ceil(headers["x-total-count"] / LIMIT);
+
+      const count = Math.ceil(headers["content-length"] / LIMIT);
 
       dispatch({
         type: "pageTotalCount",
@@ -94,7 +94,7 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
 
   async function getOneProduct(id: number) {
     try {
-      const { data } = await $axios.get(`${API_BACKEND}/products/${id}/`);
+      const { data } = await $axios.get(`${API_BACKEND}/products/726/`);
 
       dispatch({
         type: "oneProduct",
