@@ -5,6 +5,7 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import AuthContext from "./contexts/AuthContext/AuthContext";
 import ProductContext from "./contexts/ProductContext/ProductContext";
+import SavedContext from "./contexts/SavedContext/SavedContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -13,7 +14,9 @@ root.render(
   <BrowserRouter>
     <AuthContext>
       <ProductContext>
-        <App />
+        <SavedContext>
+          <App />
+        </SavedContext>
       </ProductContext>
     </AuthContext>
   </BrowserRouter>

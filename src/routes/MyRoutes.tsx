@@ -7,6 +7,8 @@ import AddProductPage from "../pages/AddProductPage/AddProductPage";
 import CatalogPage from "../pages/CatalogPage/CatalogPage";
 import EditProductPage from "../pages/EditProductPage/EditProductPage";
 import DetailsPage from "../pages/DetailsPage/DetailsPage";
+import SavePage from "../pages/SavedPage/SavePage";
+import CommentPage from "../pages/CommentPage/CommentPage";
 
 const MyRoutes = () => {
   return (
@@ -17,6 +19,8 @@ const MyRoutes = () => {
         <Route path="/add" element={<AddProductPage />} />
         <Route path="/edit/:id" element={<EditProductPage />} />
         <Route path="/details/:id" element={<DetailsPage />} />
+        <Route path="/save" element={<SavePage />} />
+        <Route path="/comment" element={<CommentPage />} />
       </Route>
       <Route path="/auth" element={<AuthPage />} />
     </Routes>

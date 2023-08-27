@@ -51,7 +51,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const LifeSearch = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [searchVal, setSearchVal] = useState<string>(
-    searchParams.get("q") || ""
+    searchParams.get("title") || ""
   );
   const { setPage } = useProductContext();
 
@@ -61,17 +61,15 @@ const LifeSearch = () => {
     if (firstMount) {
       setFirstMount(false);
     }
-    const currentParams = Object.fromEntries([...searchParams]);
 
     setSearchParams({
-      ...currentParams,
-      q: searchVal,
+      title: searchVal,
     });
     setPage(1);
   }, [searchVal]);
 
   return (
-    <Search sx={{ mx: 3 }}>
+    <Search className="search_navbar" sx={{ mx: 3 }}>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>

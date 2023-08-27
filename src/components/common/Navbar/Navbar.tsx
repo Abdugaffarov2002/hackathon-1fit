@@ -8,7 +8,7 @@ import InputBase from "@mui/material/InputBase";
 import Badge from "@mui/material/Badge";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
+import TurnedInOutlinedIcon from "@mui/icons-material/TurnedInOutlined";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import MoreIcon from "@mui/icons-material/MoreVert";
@@ -16,6 +16,7 @@ import { Button, Container, Link, Typography } from "@mui/material";
 import "./Navbar.css";
 import { useAuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
+import LiveSearch from "../../LiveSearch/LiveSearch";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -217,15 +218,11 @@ export default function Navbar() {
               <Typography onClick={() => navigate("/add")}>ADD </Typography>
             )}
           </Container>
-          <Search className="search_navbar">
-            <SearchIconWrapper>
-              <SearchIcon />
-            </SearchIconWrapper>
-            <StyledInputBase
-              placeholder="Search…"
-              inputProps={{ "aria-label": "search" }}
-            />
-          </Search>
+
+          <LiveSearch />
+          <IconButton onClick={() => navigate("/save")}>
+            <TurnedInOutlinedIcon sx={{ color: "white" }} />
+          </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>
             <Button

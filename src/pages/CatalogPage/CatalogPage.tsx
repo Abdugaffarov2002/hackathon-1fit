@@ -1,5 +1,5 @@
 import { Box, Grid, InputBase, alpha, styled } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ProductItem from "../../components/common/ProductItem/ProductItem";
 import { useSearchParams } from "react-router-dom";
 import { useProductContext } from "../../contexts/ProductContext/ProductContext";
@@ -55,6 +55,16 @@ const CatalogPage = () => {
   }, [serchParams]);
   console.log(products, "products");
 
+  const [serchParams2, setSearchParams2] = useSearchParams();
+
+  const [serchVal, setSearchVal] = useState(serchParams.get("title") || "");
+
+  useEffect(() => {
+    setSearchParams2({
+      title: serchVal,
+    });
+  }, [serchVal]);
+
   return (
     <div>
       <Box sx={{ maxWidth: "max-content", margin: "30px auto" }}>
@@ -66,6 +76,8 @@ const CatalogPage = () => {
           <SearchIcon />
         </SearchIconWrapper>
         <StyledInputBase
+          value={serchVal}
+          onChange={(e) => setSearchVal(e.target.value)}
           placeholder="Search…"
           inputProps={{ "aria-label": "search" }}
         />

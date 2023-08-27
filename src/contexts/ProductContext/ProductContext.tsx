@@ -51,24 +51,24 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useReducer(reducer, initState);
   const [page, setPage] = useState<number>(
-    +(searchParams.get("_page") as string) || 1
+    +(searchParams.get("page") as string) || 1
   );
 
-  const getFilteredProducts = async ({ category }: { category: string }) => {
-    try {
-      const response = await $axios.get<products[]>(API);
-      const filteredProducts = response.data.filter(
-        (product: products) => product.category === category
-      );
+  // const getFilteredProducts = async ({ category }: { category: string }) => {
+  //   try {
+  //     const response = await $axios.get(`${API_BACKEND}`);
+  //     const filteredProducts = response.data.map(
+  //       (products: { category: string }) => products.category === category
+  //     );
 
-      dispatch({
-        type: "products",
-        payload: filteredProducts,
-      });
-    } catch (error) {
-      console.error("Error fetching filtered products:", error);
-    }
-  };
+  //     dispatch({
+  //       type: "products",
+  //       payload: filteredProducts,
+  //     });
+  //   } catch (error) {
+  //     console.error("Error fetching filtered products:", error);
+  //   }
+  // };
 
   async function getProducts() {
     try {
@@ -87,6 +87,7 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
         type: "products",
         payload: data.results,
       });
+      console.log(headers, "headers");
     } catch (e) {
       console.log(e);
     }
@@ -94,7 +95,7 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
 
   async function getOneProduct(id: number) {
     try {
-      const { data } = await $axios.get(`${API_BACKEND}/products/726/`);
+      const { data } = await $axios.get(`${API_BACKEND}/products/729/`);
 
       dispatch({
         type: "oneProduct",
@@ -147,24 +148,6 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
     }
   }
 
-  function likeProduct(id: number, likes: number) {
-    const updatedLikes = likes + 1; // Увеличение на 1, если пользователь нажимает на лайк
-
-    const updatedData = {
-      likes: updatedLikes,
-    };
-
-    $axios
-      .patch(`${API_BACKEND}/products/${id}/`, updatedData)
-      .then((response) => {
-        console.log("Продукт успешно лайкнут:", response.data);
-        // Обновите состояние в вашем Redux-сторе или контексте
-      })
-      .catch((error) => {
-        console.error("Ошибка при лайке продукта:", error);
-      });
-  }
-
   const value = {
     products: state.products,
     oneProduct: state.oneProduct,
@@ -178,9 +161,7 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
     getOneProduct,
     editProduct,
     setPage,
-    likeProduct,
-     getFilteredProducts,
-
+    // getFilteredProducts,
   };
   return (
     <productContext.Provider value={value}>{children}</productContext.Provider>

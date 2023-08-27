@@ -7,17 +7,12 @@ import FormLabel from "@mui/material/FormLabel";
 import { useSearchParams } from "react-router-dom";
 import { useProductContext } from "../../../contexts/ProductContext/ProductContext";
 
-// interface IProps {
-//   setGender: (gender: string) => void;
-//   gender: string;
-// { setGender, gender }: IProps}
-
 export default function Filter() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [category, setCategory] = useState(
     searchParams.get("category") || "all"
   );
-  const { setPage, getProducts } = useProductContext();
+  const { setPage } = useProductContext();
   const [firstMount, setFirstMount] = useState(true);
 
   React.useEffect(() => {
@@ -25,19 +20,11 @@ export default function Filter() {
       setFirstMount(false);
       return;
     }
-    const currentParams = Object.fromEntries([...searchParams]);
 
-    if (category === "all") {
-      delete currentParams.category;
-      setSearchParams({
-        ...currentParams,
-      });
-    } else {
-      setSearchParams({
-        ...currentParams,
-        category,
-      });
-    }
+    setSearchParams({
+      category,
+    });
+    // getFilteredProducts({ category });
     setPage(1);
   }, [category]);
   return (
@@ -66,32 +53,32 @@ export default function Filter() {
           label="All"
         />
         <FormControlLabel
-          onChange={() => setCategory("Gym")}
-          value="Gym"
+          onChange={() => setCategory("electronics")}
+          value="electronics"
           control={<Radio />}
           label="Gym"
         />
         <FormControlLabel
-          onChange={() => setCategory("Swimming lessons")}
-          value="Swimming lessons"
+          onChange={() => setCategory("headphones")}
+          value="headphones"
           control={<Radio />}
           label="Swimming lessons"
         />
         <FormControlLabel
-          onChange={() => setCategory("Yoga")}
-          value="Yoga"
+          onChange={() => setCategory("phones")}
+          value="phones"
           control={<Radio />}
           label="Yoga"
         />
         <FormControlLabel
-          onChange={() => setCategory("Stretching and Pilates")}
-          value="Stretching and Pilates"
+          onChange={() => setCategory("laptops")}
+          value="laptops"
           control={<Radio />}
           label="Stretching and Pilates"
         />
         <FormControlLabel
-          onChange={() => setCategory("Dance")}
-          value="Dance"
+          onChange={() => setCategory("test")}
+          value="test"
           control={<Radio />}
           label="Dance"
         />
@@ -118,12 +105,6 @@ export default function Filter() {
           value="Ballet"
           control={<Radio />}
           label="Ballet"
-        />
-        <FormControlLabel
-          onChange={() => setCategory("Other")}
-          value="Other"
-          control={<Radio />}
-          label="Other"
         />
       </RadioGroup>
     </FormControl>
