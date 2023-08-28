@@ -24,6 +24,7 @@ export function useProductContext(): ProductContextTypes {
 const initState: initStateProducts = {
   products: [],
   oneProduct: null,
+  product: null,
   categories: [],
   pageTotalCount: 1,
   page: 1,
@@ -35,6 +36,8 @@ function reducer(state: initStateProducts, action: ProductContextActions) {
       return { ...state, products: action.payload };
     case "oneProduct":
       return { ...state, oneProduct: action.payload };
+    case "product":
+      return { ...state, product: action.payload };
     case "categories":
       return { ...state, categories: action.payload };
     case "pageTotalCount":
@@ -54,21 +57,21 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
     +(searchParams.get("page") as string) || 1
   );
 
-  // const getFilteredProducts = async ({ category }: { category: string }) => {
-  //   try {
-  //     const response = await $axios.get(`${API_BACKEND}`);
-  //     const filteredProducts = response.data.map(
-  //       (products: { category: string }) => products.category === category
-  //     );
+  const getFilteredProducts = async ({ category }: { category: string }) => {
+    try {
+      const response = await $axios.get(`${API_BACKEND}`);
+      const filteredProducts = response.data.map(
+        (products: { category: string }) => products.category === category
+      );
 
-  //     dispatch({
-  //       type: "products",
-  //       payload: filteredProducts,
-  //     });
-  //   } catch (error) {
-  //     console.error("Error fetching filtered products:", error);
-  //   }
-  // };
+      dispatch({
+        type: "products",
+        payload: filteredProducts,
+      });
+    } catch (error) {
+      console.error("Error fetching filtered products:", error);
+    }
+  };
 
   async function getProducts() {
     try {
@@ -95,7 +98,7 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
 
   async function getOneProduct(id: number) {
     try {
-      const { data } = await $axios.get(`${API_BACKEND}/products/729/`);
+      const { data } = await $axios.get(`${API_BACKEND}/products/${id}/`);
 
       dispatch({
         type: "oneProduct",
@@ -148,9 +151,24 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
     }
   }
 
+  async function showOneProduct(id: number) {
+    try {
+      const { data } = await $axios.get(`${API_BACKEND}/products/${id}/`);
+
+      dispatch({
+        type: "product",
+        payload: data,
+      });
+      console.log(data, "data product context");
+    } catch (error) {
+      console.log(error, "errorOfOneProduct");
+    }
+  }
+
   const value = {
     products: state.products,
     oneProduct: state.oneProduct,
+    product: state.product,
     categories: state.categories,
     pageTotalCount: state.pageTotalCount,
     page,
@@ -161,7 +179,8 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
     getOneProduct,
     editProduct,
     setPage,
-    // getFilteredProducts,
+    showOneProduct,
+    getFilteredProducts,
   };
   return (
     <productContext.Provider value={value}>{children}</productContext.Provider>

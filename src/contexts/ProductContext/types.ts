@@ -3,6 +3,7 @@ import { CategoryType, ProductType } from "../../models/product";
 export interface initStateProducts {
   products: ProductType[];
   oneProduct: ProductType | null;
+  product: ProductType | null;
   categories: CategoryType[];
   page: number;
   pageTotalCount: number;
@@ -16,7 +17,8 @@ export interface ProductContextTypes extends initStateProducts {
   getOneProduct: (id: number) => void;
   editProduct: (id: number, newData: any) => void;
   setPage: (num: number) => void;
-  // getFilteredProducts: ({ category }: { category: string }) => void;
+  showOneProduct: (id: number) => void;
+  getFilteredProducts: ({ category }: { category: string }) => void;
 }
 
 export type IInitState = {
@@ -34,6 +36,10 @@ interface OneProductAction {
   type: "oneProduct";
   payload: ProductType;
 }
+interface ProductAction {
+  type: "product";
+  payload: ProductType;
+}
 interface CategoriesAction {
   type: "categories";
   payload: CategoryType[];
@@ -45,6 +51,7 @@ interface PageTotalCountAction {
 export type ProductContextActions =
   | ProductsAction
   | OneProductAction
+  | ProductAction
   | PageTotalCountAction
   | CategoriesAction;
 

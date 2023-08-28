@@ -20,11 +20,19 @@ export default function Filter() {
       setFirstMount(false);
       return;
     }
+    const currentParams = Object.fromEntries([...searchParams]);
 
-    setSearchParams({
-      category,
-    });
-    // getFilteredProducts({ category });
+    if (category === "all") {
+      delete currentParams.category;
+      setSearchParams({
+        ...currentParams,
+      });
+    } else {
+      setSearchParams({
+        ...currentParams,
+        category,
+      });
+    }
     setPage(1);
   }, [category]);
   return (

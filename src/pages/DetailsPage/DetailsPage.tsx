@@ -12,9 +12,10 @@ import {
 } from "@mui/material";
 import "./DetailsPage.css";
 import { useProductContext } from "../../contexts/ProductContext/ProductContext";
+import CommentPage from "../CommentPage/CommentPage";
 
 const DetailsPage = () => {
-  const { getOneProduct, oneProduct } = useProductContext();
+  const { getOneProduct, oneProduct, showOneProduct } = useProductContext();
 
   const navigate = useNavigate();
 
@@ -22,7 +23,7 @@ const DetailsPage = () => {
 
   useEffect(() => {
     if (id) {
-      getOneProduct(+id);
+      showOneProduct(+id);
     }
   }, [id]);
 
@@ -67,7 +68,7 @@ const DetailsPage = () => {
                   color="text.secondary"
                   component={"div"}
                 >
-                  ${oneProduct.price}
+                  {oneProduct.description}
                 </Typography>
               </CardContent>
             </Container>

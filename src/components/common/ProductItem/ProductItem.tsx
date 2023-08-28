@@ -57,7 +57,7 @@ export default function ProductItem({ item }: itemProps) {
     newComment,
     showOneComment,
   } = React.useContext(saveContext) as ISaveContextTypes;
-  const { deleteProduct } = useProductContext();
+  const { deleteProduct, showOneProduct, getOneProduct } = useProductContext();
   const { isAdmin, user } = useAuthContext();
   const navigate = useNavigate();
 
@@ -111,7 +111,11 @@ export default function ProductItem({ item }: itemProps) {
                   "aria-labelledby": "basic-button",
                 }}
               >
-                <MenuItem onClick={() => navigate("/edit/id")}>
+                <MenuItem
+                  onClick={() => {
+                    navigate("/edit/id");
+                  }}
+                >
                   <DriveFileRenameOutlineOutlinedIcon />
                 </MenuItem>
 
@@ -123,7 +127,12 @@ export default function ProductItem({ item }: itemProps) {
           )}
         </CardMedia>
 
-        <CardContent onClick={() => navigate("/details/id")}>
+        <CardContent
+          onClick={() => {
+            navigate("/details/id");
+            getOneProduct(item.id);
+          }}
+        >
           <Typography gutterBottom variant="h5" component="div">
             {item.title}
           </Typography>

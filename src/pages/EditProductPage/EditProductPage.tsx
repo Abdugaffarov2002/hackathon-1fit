@@ -34,8 +34,9 @@ export default function EditProductPage() {
   const { id } = useParams() as { id: string };
   const navigate = useNavigate();
   useEffect(() => {
+    // getOneProduct(+id);
+
     getCategories();
-    getOneProduct(+id);
   }, []);
 
   useEffect(() => {
