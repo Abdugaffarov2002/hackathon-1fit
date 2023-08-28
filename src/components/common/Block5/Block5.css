@@ -83,3 +83,15 @@
   text-transform: none;
   color: #fff;
 }
+@media screen and (max-width: 768px) {
+  .container5 {
+    margin-top: 600px;
+  }
+  .cart-block {
+    margin-top: px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+}

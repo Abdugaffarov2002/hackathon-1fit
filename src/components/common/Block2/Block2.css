@@ -42,3 +42,9 @@
   display: flex;
   justify-content: center;
 }
+@media screen and (max-width: 768px) {
+  .btn_logout {
+    padding: 6px 15px;
+    font-size: 10px;
+  }
+}
