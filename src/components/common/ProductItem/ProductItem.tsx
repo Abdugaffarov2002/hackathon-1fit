@@ -4,17 +4,7 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import {
-  Box,
-  Container,
-  Grid,
-  IconButton,
-  Input,
-  Link,
-  Modal,
-  SelectChangeEvent,
-  TextField,
-} from "@mui/material";
+import { Box, Container, Grid, IconButton, Input, Modal } from "@mui/material";
 import MoreVertOutlinedIcon from "@mui/icons-material/MoreVertOutlined";
 import DriveFileRenameOutlineOutlinedIcon from "@mui/icons-material/DriveFileRenameOutlineOutlined";
 import TurnedInNotOutlinedIcon from "@mui/icons-material/TurnedInNotOutlined";
@@ -28,6 +18,9 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import Rating from "@mui/material/Rating";
+import InputBase from "@mui/material/InputBase";
+
+import { styled } from "@mui/material/styles";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../../../contexts/AuthContext/AuthContext";
@@ -38,14 +31,31 @@ interface itemProps {
   item: ProductType;
 }
 
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+  color: "inherit",
+  "& .MuiInputBase-input": {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
+
 export default function ProductItem({ item }: itemProps) {
   const {
     isAlreadyInSave,
     addProductToSave,
     deleteProductFromSave,
     addProductToComment,
-    editInputValue,
-    save,
+    setNewComment,
+    newComment,
+    showOneComment,
   } = React.useContext(saveContext) as ISaveContextTypes;
   const { deleteProduct } = useProductContext();
   const { isAdmin, user } = useAuthContext();
@@ -74,39 +84,6 @@ export default function ProductItem({ item }: itemProps) {
   const [openM, setOpenM] = React.useState(false);
   const handleOpenM = () => setOpenM(true);
   const handleCloseM = () => setOpenM(false);
-
-  // --------------------------------------------------------//
-  // --------------------------------------------------------//
-
-  const [formValue, setFormValue] = React.useState({
-    comment: "",
-    products: [],
-  });
-
-  function handleChange(
-    e:
-      | React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-      | SelectChangeEvent<string>
-  ) {
-    setFormValue({
-      ...formValue,
-      [e.target.name]: e.target.value,
-    });
-  }
-
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-
-    if (!formValue.comment.trim()) {
-      alert("fill all fields");
-      return;
-    }
-
-    editInputValue({
-      ...formValue,
-    });
-    console.log(formValue, "formValue");
-  }
 
   // --------------------------------------------------------//
 
@@ -172,32 +149,32 @@ export default function ProductItem({ item }: itemProps) {
               aria-labelledby="modal-modal-title"
               aria-describedby="modal-modal-description"
             >
-              <Box
-                sx={style}
-                component="form"
-                onSubmit={handleSubmit}
-                noValidate
-              >
+              <Box sx={style} component="form" noValidate>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                   {user?.email}
                 </Typography>
 
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                  <Input
+                  <StyledInputBase
                     required
                     fullWidth
                     name="comment"
                     autoFocus
-                    value={formValue.comment}
-                    onChange={handleChange}
+                    value={newComment}
+                    onChange={(e) => setNewComment(e.target.value)}
                   />
                   <Button
-                    onClick={() => addProductToComment(item)}
+                    onClick={() => {
+                      addProductToComment(item);
+                      showOneComment(item.id);
+                    }}
                     sx={{ mt: "5px", ml: "-10px" }}
                   >
                     Send
                   </Button>
-                  <CommentPage />
+                  <Container>
+                    <CommentPage />
+                  </Container>
                 </Typography>
               </Box>
             </Modal>

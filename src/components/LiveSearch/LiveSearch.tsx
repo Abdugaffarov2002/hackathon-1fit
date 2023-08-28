@@ -1,11 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 import { styled, alpha } from "@mui/material/styles";
 import { useSearchParams } from "react-router-dom";
-import ProductContext, {
-  useProductContext,
-} from "../../contexts/ProductContext/ProductContext";
+import { useProductContext } from "../../contexts/ProductContext/ProductContext";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",

@@ -8,8 +8,10 @@ export interface ISave {
 export interface ISaveContextTypes {
   save: ISave;
   comments: ISave;
-
-  editInputValue: (inpValue: ISave) => void;
+  newComment: string;
+  showComment: string;
+  setNewComment: (comment: string) => void;
+  showOneComment: (id: number) => void;
   getSave: () => void;
   getComment: () => void;
   addProductToSave: (product: ProductType) => void;

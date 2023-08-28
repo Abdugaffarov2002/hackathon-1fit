@@ -80,6 +80,8 @@ const SavedContext: FC<ICartContextProps> = ({ children }) => {
   // ----------------- comment ---------------------------- //
 
   const [comments, setComments] = useState(initState);
+  const [newComment, setNewComment] = useState("");
+  const [showComment, setShowComment] = useState("");
 
   function getComment() {
     const data = getCommentFromLS();
@@ -91,7 +93,7 @@ const SavedContext: FC<ICartContextProps> = ({ children }) => {
       const data = getCommentFromLS();
       data.products.push({
         ...product,
-        comment: comments,
+        comment: `${newComment}`,
       });
 
       setCommentToLS(data);
@@ -100,10 +102,14 @@ const SavedContext: FC<ICartContextProps> = ({ children }) => {
       console.log(error, "add product to comment ");
     }
   }
+  function showOneComment(id: number) {
+    const data = getCommentFromLS();
 
-  function editInputValue(inpData: ISave) {
-    setComments(inpData);
-    console.log(inpData, "inp Data");
+    data.products.map((item) => {
+      if (item.id === id) {
+        setShowComment(item.comment);
+      }
+    });
   }
 
   // ----------------- comment ---------------------------- //
@@ -111,13 +117,16 @@ const SavedContext: FC<ICartContextProps> = ({ children }) => {
   const value = {
     save,
     comments,
+    newComment,
+    showComment,
+    setNewComment,
     getSave,
     addProductToSave,
     isAlreadyInSave,
     deleteProductFromSave,
     addProductToComment,
     getComment,
-    editInputValue,
+    showOneComment,
   };
   return <saveContext.Provider value={value}>{children}</saveContext.Provider>;
 };
