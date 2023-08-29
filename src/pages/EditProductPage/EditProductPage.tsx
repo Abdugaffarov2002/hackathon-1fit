@@ -16,6 +16,7 @@ import {
 
 import { useNavigate, useParams } from "react-router-dom";
 import { useProductContext } from "../../contexts/ProductContext/ProductContext";
+import { error } from "console";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
@@ -34,7 +35,9 @@ export default function EditProductPage() {
   const { id } = useParams() as { id: string };
   const navigate = useNavigate();
   useEffect(() => {
-    // getOneProduct(+id);
+    const numericId = parseInt(id);
+
+    getOneProduct(numericId);
 
     getCategories();
   }, []);

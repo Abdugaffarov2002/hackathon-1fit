@@ -151,19 +151,46 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
     }
   }
 
-  async function showOneProduct(id: number) {
-    try {
-      const { data } = await $axios.get(`${API_BACKEND}/products/${id}/`);
+  async function likeProduct(id: number) {
+    const productToLike = state.products.find((product) => product.id === id);
 
-      dispatch({
-        type: "product",
-        payload: data,
-      });
-      console.log(data, "data product context");
-    } catch (error) {
-      console.log(error, "errorOfOneProduct");
+    if (productToLike) {
+      await $axios
+        .patch(`${API_BACKEND}/${id}`, { likes: productToLike.likes + 1 })
+        .then((response) => {
+          const updatedProduct = {
+            ...productToLike,
+            likes: response.data.likes,
+          };
+          const updatedProducts = state.products.map((product) =>
+            product.id === id ? updatedProduct : product
+          );
+
+          dispatch({
+            type: "products",
+            payload: updatedProducts,
+          });
+          getOneProduct(id);
+        })
+        .catch((error) => {
+          console.error("Ошибка при лайке продукта:", error);
+        });
     }
   }
+
+  // async function showOneProduct(id: number) {
+  //   try {
+  //     const { data } = await $axios.get(`${API_BACKEND}/products/${id}/`);
+
+  //     dispatch({
+  //       type: "product",
+  //       payload: data,
+  //     });
+  //     console.log(data, "data product context");
+  //   } catch (error) {
+  //     console.log(error, "errorOfOneProduct");
+  //   }
+  // }
 
   const value = {
     products: state.products,
@@ -179,8 +206,9 @@ const ProductContext: FC<ProductContextProps> = ({ children }) => {
     getOneProduct,
     editProduct,
     setPage,
-    showOneProduct,
+    // showOneProduct,
     getFilteredProducts,
+    likeProduct,
   };
   return (
     <productContext.Provider value={value}>{children}</productContext.Provider>

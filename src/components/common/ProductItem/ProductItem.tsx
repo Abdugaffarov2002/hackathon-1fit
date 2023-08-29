@@ -52,6 +52,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function ProductItem({ item }: itemProps) {
+  const [isLiked, setIsLiked] = React.useState(false);
+  const [likeCount, setLikeCount] = React.useState(0);
+
+  function handleLikeClick() {
+    setIsLiked(!isLiked);
+    if (isLiked) {
+      setLikeCount(0);
+    } else {
+      setLikeCount(+1);
+    }
+  }
   const {
     isAlreadyInSave,
     addProductToSave,
@@ -61,11 +72,15 @@ export default function ProductItem({ item }: itemProps) {
     newComment,
     showOneComment,
   } = React.useContext(saveContext) as ISaveContextTypes;
+<<<<<<< HEAD
 
   const { isAlreadyInCart, addProductToCart, deleteProductFromCart } =
     React.useContext(cartContext) as ICartContextTypes;
 
   const { deleteProduct, showOneProduct, getOneProduct } = useProductContext();
+=======
+  const { deleteProduct, getOneProduct, likeProduct } = useProductContext();
+>>>>>>> ef66c56177814af3e655106c5837de016f4ae42c
   const { isAdmin, user } = useAuthContext();
   const navigate = useNavigate();
 
@@ -122,6 +137,7 @@ export default function ProductItem({ item }: itemProps) {
                 <MenuItem
                   onClick={() => {
                     navigate("/edit/id");
+                    getOneProduct(item.id);
                   }}
                 >
                   <DriveFileRenameOutlineOutlinedIcon />
@@ -154,9 +170,18 @@ export default function ProductItem({ item }: itemProps) {
         </Container>
         <CardActions>
           <Container sx={{ display: "flex", flexDirection: "row" }}>
-            <IconButton>
-              <FavoriteBorderIcon sx={{ mr: "15px" }}></FavoriteBorderIcon>
-              <Typography sx={{ mr: "15px" }}>{item.likes}</Typography>
+            <IconButton
+              onClick={() => {
+                likeProduct(item.id);
+                handleLikeClick();
+              }}
+            >
+              {isLiked ? (
+                <FavoriteOutlinedIcon sx={{ mr: "15px" }} color="error" />
+              ) : (
+                <FavoriteBorderIcon sx={{ mr: "15px" }} />
+              )}
+              <Typography sx={{ mr: "15px" }}>{likeCount}</Typography>
             </IconButton>
             <IconButton onClick={handleOpenM}>
               <ChatBubbleOutlineIcon />
