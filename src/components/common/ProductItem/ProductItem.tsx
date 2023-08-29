@@ -48,6 +48,17 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function ProductItem({ item }: itemProps) {
+  const [isLiked, setIsLiked] = React.useState(false);
+  const [likeCount, setLikeCount] = React.useState(0);
+
+  function handleLikeClick() {
+    setIsLiked(!isLiked);
+    if (isLiked) {
+      setLikeCount(0);
+    } else {
+      setLikeCount(+1);
+    }
+  }
   const {
     isAlreadyInSave,
     addProductToSave,
@@ -57,7 +68,7 @@ export default function ProductItem({ item }: itemProps) {
     newComment,
     showOneComment,
   } = React.useContext(saveContext) as ISaveContextTypes;
-  const { deleteProduct, showOneProduct, getOneProduct } = useProductContext();
+  const { deleteProduct, getOneProduct, likeProduct } = useProductContext();
   const { isAdmin, user } = useAuthContext();
   const navigate = useNavigate();
 
@@ -114,6 +125,7 @@ export default function ProductItem({ item }: itemProps) {
                 <MenuItem
                   onClick={() => {
                     navigate("/edit/id");
+                    getOneProduct(item.id);
                   }}
                 >
                   <DriveFileRenameOutlineOutlinedIcon />
@@ -145,9 +157,18 @@ export default function ProductItem({ item }: itemProps) {
         </Container>
         <CardActions>
           <Container sx={{ display: "flex", flexDirection: "row" }}>
-            <IconButton>
-              <FavoriteBorderIcon sx={{ mr: "15px" }}></FavoriteBorderIcon>
-              <Typography sx={{ mr: "15px" }}>{item.likes}</Typography>
+            <IconButton
+              onClick={() => {
+                likeProduct(item.id);
+                handleLikeClick();
+              }}
+            >
+              {isLiked ? (
+                <FavoriteOutlinedIcon sx={{ mr: "15px" }} color="error" />
+              ) : (
+                <FavoriteBorderIcon sx={{ mr: "15px" }} />
+              )}
+              <Typography sx={{ mr: "15px" }}>{likeCount}</Typography>
             </IconButton>
             <IconButton onClick={handleOpenM}>
               <ChatBubbleOutlineIcon />

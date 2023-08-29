@@ -2,7 +2,6 @@ import React, { FC, useContext, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   Box,
-  Button,
   Card,
   CardContent,
   CardMedia,
@@ -12,20 +11,17 @@ import {
 } from "@mui/material";
 import "./DetailsPage.css";
 import { useProductContext } from "../../contexts/ProductContext/ProductContext";
-import CommentPage from "../CommentPage/CommentPage";
 
 const DetailsPage = () => {
-  const { getOneProduct, oneProduct, showOneProduct } = useProductContext();
-
-  const navigate = useNavigate();
+  const { oneProduct } = useProductContext();
 
   const { id } = useParams();
 
-  useEffect(() => {
-    if (id) {
-      showOneProduct(+id);
-    }
-  }, [id]);
+  // useEffect(() => {
+  //   if (id) {
+  //     showOneProduct(+id);
+  //   }
+  // }, [id]);
 
   return (
     <div>
