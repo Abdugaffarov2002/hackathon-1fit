@@ -17,6 +17,7 @@ import "./Navbar.css";
 import { useAuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { useNavigate } from "react-router-dom";
 import LiveSearch from "../../LiveSearch/LiveSearch";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -222,6 +223,9 @@ export default function Navbar() {
           <LiveSearch />
           <IconButton onClick={() => navigate("/save")}>
             <TurnedInOutlinedIcon sx={{ color: "white" }} />
+          </IconButton>
+          <IconButton onClick={() => navigate("/cart")}>
+            <ShoppingCartIcon sx={{ color: "white" }} />
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: "none", md: "flex" } }}>

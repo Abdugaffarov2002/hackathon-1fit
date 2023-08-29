@@ -15,11 +15,11 @@ import { ProductType } from "../../../models/product";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import Rating from "@mui/material/Rating";
 import InputBase from "@mui/material/InputBase";
-
+import RemoveShoppingCartOutlinedIcon from "@mui/icons-material/RemoveShoppingCartOutlined";
+import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { styled } from "@mui/material/styles";
 import MenuItem from "@mui/material/MenuItem";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +27,10 @@ import { useAuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { saveContext } from "../../../contexts/SavedContext/SavedContext";
 import { ISaveContextTypes } from "../../../contexts/SavedContext/type";
 import CommentPage from "../../../pages/CommentPage/CommentPage";
+import { ProductContextTypes } from "../../../contexts/ProductContext/types";
+import { ICartContextTypes } from "../../../contexts/CartContext/type";
+import { cartContext } from "../../../contexts/CartContext/CartContext";
+
 interface itemProps {
   item: ProductType;
 }
@@ -57,6 +61,10 @@ export default function ProductItem({ item }: itemProps) {
     newComment,
     showOneComment,
   } = React.useContext(saveContext) as ISaveContextTypes;
+
+  const { isAlreadyInCart, addProductToCart, deleteProductFromCart } =
+    React.useContext(cartContext) as ICartContextTypes;
+
   const { deleteProduct, showOneProduct, getOneProduct } = useProductContext();
   const { isAdmin, user } = useAuthContext();
   const navigate = useNavigate();
@@ -139,6 +147,7 @@ export default function ProductItem({ item }: itemProps) {
           <Typography variant="body2" color="text.secondary">
             {item.description}
           </Typography>
+          {item.price}
         </CardContent>
         <Container>
           <Rating sx={{ mr: "10px" }} />
@@ -200,6 +209,16 @@ export default function ProductItem({ item }: itemProps) {
               </IconButton>
             )}
           </Container>
+
+          {isAlreadyInCart(item.id) ? (
+            <IconButton onClick={() => deleteProductFromCart(item.id)}>
+              <RemoveShoppingCartOutlinedIcon color="error" />
+            </IconButton>
+          ) : (
+            <IconButton onClick={() => addProductToCart(item)}>
+              <ShoppingCartOutlinedIcon color="primary" />
+            </IconButton>
+          )}
         </CardActions>
       </Card>
     </Grid>

@@ -9,6 +9,7 @@ import EditProductPage from "../pages/EditProductPage/EditProductPage";
 import DetailsPage from "../pages/DetailsPage/DetailsPage";
 import SavePage from "../pages/SavedPage/SavePage";
 import CommentPage from "../pages/CommentPage/CommentPage";
+import CartPage from "../pages/CartPage/CartPage";
 
 const MyRoutes = () => {
   return (
@@ -21,6 +22,7 @@ const MyRoutes = () => {
         <Route path="/details/:id" element={<DetailsPage />} />
         <Route path="/save" element={<SavePage />} />
         <Route path="/comment" element={<CommentPage />} />
+        <Route path="/cart" element={<CartPage />} />
       </Route>
       <Route path="/auth" element={<AuthPage />} />
     </Routes>
