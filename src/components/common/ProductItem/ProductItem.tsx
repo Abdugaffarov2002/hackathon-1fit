@@ -27,9 +27,9 @@ import { useAuthContext } from "../../../contexts/AuthContext/AuthContext";
 import { saveContext } from "../../../contexts/SavedContext/SavedContext";
 import { ISaveContextTypes } from "../../../contexts/SavedContext/type";
 import CommentPage from "../../../pages/CommentPage/CommentPage";
-import { ProductContextTypes } from "../../../contexts/ProductContext/types";
 import { ICartContextTypes } from "../../../contexts/CartContext/type";
 import { cartContext } from "../../../contexts/CartContext/CartContext";
+import FavoriteOutlinedIcon from "@mui/icons-material/FavoriteOutlined";
 
 interface itemProps {
   item: ProductType;
@@ -72,15 +72,12 @@ export default function ProductItem({ item }: itemProps) {
     newComment,
     showOneComment,
   } = React.useContext(saveContext) as ISaveContextTypes;
-<<<<<<< HEAD
 
   const { isAlreadyInCart, addProductToCart, deleteProductFromCart } =
     React.useContext(cartContext) as ICartContextTypes;
 
-  const { deleteProduct, showOneProduct, getOneProduct } = useProductContext();
-=======
   const { deleteProduct, getOneProduct, likeProduct } = useProductContext();
->>>>>>> ef66c56177814af3e655106c5837de016f4ae42c
+
   const { isAdmin, user } = useAuthContext();
   const navigate = useNavigate();
 
